@@ -1,11 +1,24 @@
-<p-tabView>
-  <p-tabPanel header="Header 1">
-    Content 1
-  </p-tabPanel>
-  <p-tabPanel header="Header 2">
-    Content 2
-  </p-tabPanel>
-  <p-tabPanel header="Header 3">
-    Content 3
-  </p-tabPanel>
-</p-tabView>
+<div class="container">
+  <div class="p-grid">
+    <div class="p-col-12">
+      <h1>Lançamentos</h1>
+    </div>
+
+    <div class="p-col-12 p-fluid">
+      <label>Descrição</label>
+      <input type="text" pInputText />
+    </div>
+
+    <div class="p-col-12">
+      <label style="display:block">Vencimento</label>
+      <input style="width: 102px" type="text" pInputText />
+
+      <label class="label-ate">até</label>
+      <input style="width: 102px" type="text" pInputText />
+    </div>
+
+    <div class="p-col-12">
+      <button type="submit" label="Pesquisar" pButton></button>
+    <div>
+  </div>
+</div>
