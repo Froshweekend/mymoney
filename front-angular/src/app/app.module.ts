@@ -16,6 +16,8 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
 import { NavbarComponent } from './navbar/navbar.component';
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 
+import {CurrencyMaskModule} from 'ng2-currency-mask';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +35,8 @@ import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-ca
     InputTextareaModule,
     CalendarModule,
     SelectButtonModule,
-    DropdownModule
+    DropdownModule,
+    CurrencyMaskModule
   ],
   providers: [],
   bootstrap: [AppComponent]
