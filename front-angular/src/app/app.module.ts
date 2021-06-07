@@ -20,8 +20,7 @@ import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-ca
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
 
 import {CurrencyMaskModule} from 'ng2-currency-mask';
-
-
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,8 @@ import {CurrencyMaskModule} from 'ng2-currency-mask';
     LancamentosPesquisaComponent,
     NavbarComponent,
     LancamentoCadastroComponent,
-    PessoaCadastroComponent
+    PessoaCadastroComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
