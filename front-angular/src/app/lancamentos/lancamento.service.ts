@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
+import * as moment from 'moment';
+
+export interface LancamentoFiltro {
+  descricao: string;
+  dataVencimentoInicio: Date;
+  dataVencimentoFim: Date;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +18,26 @@ export class LancamentoService {
 
   constructor(private http: HttpClient) { }
 
-  pesquisar(): Promise<any> {
+  pesquisar(filtro: LancamentoFiltro): Promise<any> {
     const headers = new HttpHeaders()
-      .append('Authorization', 'Basic YWRtaW5AbXltb25leS5jb206YWRtaW4=');
+      .append('Authorization', 'basic YWRtaW5AbXltb25leS5jb206YWRtaW4=');
+    let params = new HttpParams();
 
-    return this.http.get(`${this.lancamentosUrl}?resumo`, { headers })
+    if (filtro.descricao) {
+      params = params.set('descricao', filtro.descricao);
+    }
+
+    if (filtro.dataVencimentoInicio) {
+      params = params.set('dataVencimentoDe',
+        moment(filtro.dataVencimentoInicio).format('YYYY-MM-DD'));
+    }
+
+    if (filtro.dataVencimentoFim) {
+      params = params.set('dataVencimentoAte',
+        moment(filtro.dataVencimentoFim).format('YYYY-MM-DD'));
+    }
+
+    return this.http.get(`${this.lancamentosUrl}?resumo`, { headers, params })
       .toPromise()
       .then(response => response['content']);
   }
