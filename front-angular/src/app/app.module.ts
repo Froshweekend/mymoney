@@ -1,7 +1,9 @@
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService} from 'primeng/api';
@@ -13,6 +15,8 @@ import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LancamentoService } from './lancamentos/lancamento.service';
+
+registerLocaleData(localePt);
 
 @NgModule({
   declarations: [
@@ -31,7 +35,14 @@ import { LancamentoService } from './lancamentos/lancamento.service';
     LancamentosModule,
     PessoasModule
   ],
-  providers: [LancamentoService, MessageService, ConfirmationService],
+  providers: [,
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+
+    MessageService,
+    ConfirmationService,
+
+    LancamentoService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
