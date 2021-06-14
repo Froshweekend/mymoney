@@ -13,7 +13,7 @@ export class CategoriaService {
 
   listarTodas(): Promise<any> {
     const headers = new HttpHeaders()
-      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+      .append('Authorization', 'basic YWRtaW5AbXltb25leS5jb206YWRtaW4=');
 
     return this.http.get(this.categoriasUrl, { headers })
       .toPromise();
