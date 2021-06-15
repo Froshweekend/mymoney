@@ -16,6 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SharedModule } from '../shared/shared.module';
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
+import { LancamentosRoutingModule } from './lancamentos-routing.module';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-ca
 
     CurrencyMaskModule,
 
-    SharedModule
+    SharedModule,
+    LancamentosRoutingModule
   ],
   declarations: [
     LancamentoCadastroComponent,
