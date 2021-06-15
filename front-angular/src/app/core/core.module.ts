@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
@@ -14,7 +15,6 @@ import { LancamentoService } from './../lancamentos/lancamento.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 
-
 registerLocaleData(localePt);
 
 @NgModule({
@@ -23,7 +23,7 @@ registerLocaleData(localePt);
     RouterModule,
 
     ToastModule,
-    ConfirmDialogModule,
+    ConfirmDialogModule
   ],
   declarations: [NavbarComponent, PaginaNaoEncontradaComponent],
   exports: [
@@ -38,6 +38,7 @@ registerLocaleData(localePt);
 
     ConfirmationService,
     MessageService,
+    Title,
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]
 })
