@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-
-import { Lancamento } from './../core/model';
+import { Injectable } from '@angular/core';
 
 import * as moment from 'moment';
+
+import { Lancamento } from './../core/model';
 
 export class LancamentoFiltro {
   descricao: string;
@@ -13,9 +13,7 @@ export class LancamentoFiltro {
   itensPorPagina = 5;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class LancamentoService {
 
   lancamentosUrl = 'http://localhost:8080/lancamentos';
@@ -25,7 +23,6 @@ export class LancamentoService {
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
     const headers = new HttpHeaders()
       .append('Authorization', 'basic YWRtaW5AbXltb25leS5jb206YWRtaW4=');
-
     let params = new HttpParams()
       .set('page', filtro.pagina.toString())
       .set('size', filtro.itensPorPagina.toString());
