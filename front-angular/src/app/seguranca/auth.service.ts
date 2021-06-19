@@ -3,10 +3,9 @@ import { Injectable } from '@angular/core';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthService {
+
   oauthTokenUrl = 'http://localhost:8080/oauth/token';
   jwtPayload: any;
 
@@ -24,7 +23,8 @@ export class AuthService {
 
     const body = `username=${usuario}&password=${senha}&grant_type=password`;
 
-    return this.http.post(this.oauthTokenUrl, body, { headers })
+    return this.http.post(this.oauthTokenUrl, body,
+      { headers, withCredentials: true })
       .toPromise()
       .then(response => {
         this.armazenarToken(response['access_token']);
@@ -42,8 +42,8 @@ export class AuthService {
 
   obterNovoAccessToken(): Promise<void> {
     const headers = new HttpHeaders()
-      .append('Content-Type', 'application/x-www-form-urlencoded')
-      .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
+      .append('Authorization', 'basic YWRtaW5AbXltb25leS5jb206YWRtaW4=')
+      .append('Content-Type', 'application/json');
 
     const body = 'grant_type=refresh_token';
 
@@ -67,6 +67,11 @@ export class AuthService {
     const token = localStorage.getItem('token');
 
     return !token || this.jwtHelper.isTokenExpired(token);
+  }
+
+  limparAccessToken() {
+    localStorage.removeItem('token');
+    this.jwtPayload = null;
   }
 
   temPermissao(permissao: string) {

@@ -12,6 +12,7 @@ import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { MoneyHttpInterceptor } from './money-http-interceptor';
 import { AuthGuard } from './auth.guard';
+import { LogoutService } from './logout.service';
 
 export function tokenGetter(): string {
   return localStorage.getItem('token');
@@ -43,7 +44,8 @@ export function tokenGetter(): string {
       useClass: MoneyHttpInterceptor,
       multi: true
     },
-    AuthGuard
+    AuthGuard,
+    LogoutService
   ]
 })
 export class SegurancaModule { }
