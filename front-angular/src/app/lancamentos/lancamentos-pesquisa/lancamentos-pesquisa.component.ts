@@ -7,6 +7,8 @@ import { Table } from 'primeng/table';
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 
+import { AuthService } from './../../seguranca/auth.service';
+
 @Component({
   selector: 'app-lancamentos-pesquisa',
   templateUrl: './lancamentos-pesquisa.component.html',
@@ -21,6 +23,7 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   constructor(
     private lancamentoService: LancamentoService,
+    public auth: AuthService,
     private errorHandler: ErrorHandlerService,
     private messageService: MessageService,
     private confirmation: ConfirmationService,
