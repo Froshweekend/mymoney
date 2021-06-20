@@ -1,6 +1,7 @@
 package br.com.ivanfsilva.mymoneyapi.repository.lancamento;
 
 import br.com.ivanfsilva.mymoneyapi.dto.LancamentoEstatisticaCategoria;
+import br.com.ivanfsilva.mymoneyapi.dto.LancamentoEstatisticaDia;
 import br.com.ivanfsilva.mymoneyapi.model.Lancamento;
 import br.com.ivanfsilva.mymoneyapi.repository.filter.LancamentoFilter;
 import br.com.ivanfsilva.mymoneyapi.repository.projection.ResumoLancamento;
@@ -13,6 +14,7 @@ import java.util.List;
 public interface LancamentoRepositoryQuery {
 
     public List<LancamentoEstatisticaCategoria> porCategoria(LocalDate mesReferencia);
+    public List<LancamentoEstatisticaDia> porDia(LocalDate mesReferencia);
 
     public Page<Lancamento> filtrar(LancamentoFilter lancamentoFilter, Pageable pageable);
     public Page<ResumoLancamento> resumir(LancamentoFilter lancamentoFilter, Pageable pageable);
