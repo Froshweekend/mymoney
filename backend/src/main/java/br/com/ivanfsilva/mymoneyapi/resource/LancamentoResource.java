@@ -1,5 +1,6 @@
 package br.com.ivanfsilva.mymoneyapi.resource;
 
+import br.com.ivanfsilva.mymoneyapi.dto.LancamentoEstatisticaCategoria;
 import br.com.ivanfsilva.mymoneyapi.event.RecursoCriadoEvent;
 import br.com.ivanfsilva.mymoneyapi.exceptionhandler.MyMoneyExceptionHandler;
 import br.com.ivanfsilva.mymoneyapi.model.Lancamento;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,6 +41,12 @@ public class LancamentoResource {
 
     @Autowired
     private MessageSource messageSource;
+
+    @GetMapping("/estatisticas/por-categoria")
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+    public List<LancamentoEstatisticaCategoria> porCategoria() {
+        return this.lancamentoRepository.porCategoria(LocalDate.now());
+    }
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
