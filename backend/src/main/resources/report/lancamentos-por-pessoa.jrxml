@@ -12,13 +12,13 @@
 	<field name="pessoa" class="br.com.ivanfsilva.mymoneyapi.model.Pessoa"/>
 	<title>
 		<band height="60" splitType="Stretch">
-			<staticText>
-				<reportElement x="82" y="15" width="390" height="30" uuid="6be613e2-5235-4e7c-aaec-a3cbfe3328a9"/>
+			<textField>
+				<reportElement x="11" y="15" width="533" height="30" uuid="4c0dc64f-1b05-4145-a713-4d57089e6f8b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="22"/>
+					<font size="18"/>
 				</textElement>
-				<text><![CDATA[Lançamentos por pessoa]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["Lançamentos por pessoa de " + DATEFORMAT($P{DT_INICIO}, "dd/MM/yyyy") + " até  " + DATEFORMAT($P{DT_FIM}, "dd/MM/yyyy")]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<columnHeader>
@@ -66,9 +66,35 @@
 			<line>
 				<reportElement x="0" y="24" width="555" height="1" uuid="50d4b333-1e55-411f-8ea1-b9e4e5eeb527"/>
 			</line>
+			<textField>
+				<reportElement x="5" y="1" width="69" height="23" uuid="2bd81544-88ba-49f7-a9d9-37c6b99bf4e7"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tipo}.getDescricao()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="1" width="379" height="22" uuid="dbe6c9a0-8a52-4702-b728-f98b47da0ea5"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pessoa}.getNome()]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
+				<reportElement x="495" y="1" width="54" height="24" uuid="89c71af5-f01d-422a-821d-e3b203ef9191"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="0" width="140" height="25" uuid="51868060-3978-478a-be3c-c7f2b21939fb"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Data " + DATEFORMAT(TODAY(), "dd/MM/yyyy")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="0" width="100" height="25" uuid="ab1c2327-7749-4f1c-9322-86b1698276ca"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 </jasperReport>
