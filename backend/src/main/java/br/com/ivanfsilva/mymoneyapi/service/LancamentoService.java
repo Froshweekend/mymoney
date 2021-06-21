@@ -1,10 +1,13 @@
 package br.com.ivanfsilva.mymoneyapi.service;
 
 import br.com.ivanfsilva.mymoneyapi.dto.LancamentoEstatisticaPessoa;
+import br.com.ivanfsilva.mymoneyapi.mail.Mailer;
 import br.com.ivanfsilva.mymoneyapi.model.Lancamento;
 import br.com.ivanfsilva.mymoneyapi.model.Pessoa;
+import br.com.ivanfsilva.mymoneyapi.model.Usuario;
 import br.com.ivanfsilva.mymoneyapi.repository.LancamentoRepository;
 import br.com.ivanfsilva.mymoneyapi.repository.PessoaRepository;
+import br.com.ivanfsilva.mymoneyapi.repository.UsuarioRepository;
 import br.com.ivanfsilva.mymoneyapi.service.exception.PessoaInexistenteOuInativaException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -26,15 +29,30 @@ import java.util.Map;
 @Service
 public class LancamentoService {
 
+    private static final String DESTINATARIOS = "ROLE_PESQUISAR_LANCAMENTO";
+
     @Autowired
     private PessoaRepository pessoaRepository;
 
     @Autowired
     private LancamentoRepository lancamentoRepository;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private Mailer mailer;
+
     @Scheduled(cron = "0 0 6 * * *")
     public void avisarSobreLancamentosVencidos() {
-        System.out.println(">>>>>>>>>>>>>>> Método sendo executado...");
+
+        List<Lancamento> vencidos = lancamentoRepository
+                .findByDataVencimentoLessThanEqualAndDataPagamentoIsNull(LocalDate.now());
+
+        List<Usuario> destinatarios = usuarioRepository
+                .findByPermissoesDescricao(DESTINATARIOS);
+
+        mailer.avisarSobreLancamentosVencidos(vencidos, destinatarios);
     }
 
     public byte[] relatorioPorPessoa(LocalDate inicio, LocalDate fim) throws Exception {
