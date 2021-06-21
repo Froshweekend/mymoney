@@ -2,6 +2,7 @@ package br.com.ivanfsilva.mymoneyapi.repository.lancamento;
 
 import br.com.ivanfsilva.mymoneyapi.dto.LancamentoEstatisticaCategoria;
 import br.com.ivanfsilva.mymoneyapi.dto.LancamentoEstatisticaDia;
+import br.com.ivanfsilva.mymoneyapi.dto.LancamentoEstatisticaPessoa;
 import br.com.ivanfsilva.mymoneyapi.model.Lancamento;
 import br.com.ivanfsilva.mymoneyapi.repository.filter.LancamentoFilter;
 import br.com.ivanfsilva.mymoneyapi.repository.projection.ResumoLancamento;
@@ -25,6 +26,35 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 
     @PersistenceContext
     private EntityManager manager;
+
+    @Override
+    public List<LancamentoEstatisticaPessoa> porPessoa(LocalDate inicio, LocalDate fim) {
+        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+
+        CriteriaQuery<LancamentoEstatisticaPessoa> criteriaQuery = criteriaBuilder.
+                createQuery(LancamentoEstatisticaPessoa.class);
+
+        Root<Lancamento> root = criteriaQuery.from(Lancamento.class);
+
+        criteriaQuery.select(criteriaBuilder.construct(LancamentoEstatisticaPessoa.class,
+                root.get("tipo"),
+                root.get("pessoa"),
+                criteriaBuilder.sum(root.get("valor"))));
+
+        criteriaQuery.where(
+                criteriaBuilder.greaterThanOrEqualTo(root.get("dataVencimento"),
+                        inicio),
+                criteriaBuilder.lessThanOrEqualTo(root.get("dataVencimento"),
+                        fim));
+
+        criteriaQuery.groupBy(root.get("tipo"),
+                root.get("pessoa"));
+
+        TypedQuery<LancamentoEstatisticaPessoa> typedQuery = manager
+                .createQuery(criteriaQuery);
+
+        return typedQuery.getResultList();
+    }
 
     @Override
     public List<LancamentoEstatisticaDia> porDia(LocalDate mesReferencia) {
