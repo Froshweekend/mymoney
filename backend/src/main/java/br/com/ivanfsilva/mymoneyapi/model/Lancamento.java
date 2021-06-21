@@ -1,5 +1,7 @@
 package br.com.ivanfsilva.mymoneyapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -42,6 +44,11 @@ public class Lancamento {
     @JoinColumn(name = "codigo_pessoa")
     @NotNull
     private Pessoa pessoa;
+
+    @JsonIgnore
+    public boolean isReceita() {
+        return TipoLancamento.RECEITA.equals(this.tipo);
+    }
 
     public Long getCodigo() {
         return codigo;
