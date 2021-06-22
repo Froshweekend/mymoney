@@ -17,6 +17,7 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component'
 import { AuthService } from '../seguranca/auth.service';
 import { NaoAutorizadoComponent } from './nao-autorizado.component';
 import { DashboardService } from './../dashboard/dashboard.service';
+import { RelatoriosService } from './../relatorios/relatorios.service';
 
 registerLocaleData(localePt);
 
@@ -40,6 +41,7 @@ registerLocaleData(localePt);
     ErrorHandlerService,
     AuthService,
     DashboardService,
+    RelatoriosService,
 
     ConfirmationService,
     MessageService,
