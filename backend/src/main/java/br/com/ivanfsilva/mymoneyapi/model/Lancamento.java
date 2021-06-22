@@ -1,6 +1,7 @@
 package br.com.ivanfsilva.mymoneyapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -40,6 +41,7 @@ public class Lancamento {
     @NotNull
     private Categoria categoria;
 
+    @JsonIgnoreProperties("contatos")
     @ManyToOne
     @JoinColumn(name = "codigo_pessoa")
     @NotNull
