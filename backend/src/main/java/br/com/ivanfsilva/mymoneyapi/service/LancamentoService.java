@@ -1,5 +1,6 @@
 package br.com.ivanfsilva.mymoneyapi.service;
 
+import br.com.ivanfsilva.mymoneyapi.storage.S3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +21,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.io.InputStream;
 import java.sql.Date;
@@ -47,6 +49,9 @@ public class LancamentoService {
 
     @Autowired
     private Mailer mailer;
+
+    @Autowired
+    private S3 s3;
 
     @Scheduled(cron = "0 0 6 * * *")
     public void avisarSobreLancamentosVencidos() {
@@ -99,11 +104,12 @@ public class LancamentoService {
     }
 
     public Lancamento salvar(Lancamento lancamento) {
-        Pessoa pessoa = pessoaRepository.findOne(lancamento.getPessoa().getCodigo());
+        validarPessoa(lancamento);
 
-        if( pessoa == null || pessoa.isInativo()) {
-            throw new PessoaInexistenteOuInativaException();
+        if (StringUtils.hasText(lancamento.getAnexo())) {
+            s3.salvar(lancamento.getAnexo());
         }
+
         return lancamentoRepository.save(lancamento);
     }
 
