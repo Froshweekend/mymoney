@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SegurancaModule } from './seguranca/seguranca.module';
 import { AppRoutingModule } from './app-routing.module';
-import {DashboardModule} from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -20,8 +19,7 @@ import {DashboardModule} from './dashboard/dashboard.module';
 
         CoreModule,
         SegurancaModule,
-        AppRoutingModule,
-        DashboardModule
+        AppRoutingModule
     ],
   providers: [],
   bootstrap: [AppComponent]
