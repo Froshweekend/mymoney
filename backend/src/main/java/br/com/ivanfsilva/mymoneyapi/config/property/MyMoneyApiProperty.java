@@ -39,6 +39,16 @@ public class MyMoneyApiProperty {
 
         private String secretAccessKey;
 
+        private String bucket = "ma-mymoney-arquivos";
+
+        public String getBucket() {
+            return bucket;
+        }
+
+        public void setBucket(String bucket) {
+            this.bucket = bucket;
+        }
+
         public String getAccessKeyId() {
             return accessKeyId;
         }
