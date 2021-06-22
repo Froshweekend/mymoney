@@ -7,20 +7,22 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SegurancaModule } from './seguranca/seguranca.module';
 import { AppRoutingModule } from './app-routing.module';
+import {DashboardModule} from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
 
-    CoreModule,
-    SegurancaModule,
-    AppRoutingModule
-  ],
+        CoreModule,
+        SegurancaModule,
+        AppRoutingModule,
+        DashboardModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
