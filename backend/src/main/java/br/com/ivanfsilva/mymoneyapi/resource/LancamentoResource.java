@@ -1,5 +1,6 @@
 package br.com.ivanfsilva.mymoneyapi.resource;
 
+import br.com.ivanfsilva.mymoneyapi.dto.Anexo;
 import br.com.ivanfsilva.mymoneyapi.dto.LancamentoEstatisticaCategoria;
 import br.com.ivanfsilva.mymoneyapi.dto.LancamentoEstatisticaDia;
 import br.com.ivanfsilva.mymoneyapi.event.RecursoCriadoEvent;
@@ -21,6 +22,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import br.com.ivanfsilva.mymoneyapi.storage.S3;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
@@ -62,15 +64,26 @@ public class LancamentoResource {
     @Autowired
     private MessageSource messageSource;
 
+    @Autowired
+    private S3 s3;
+
     @PostMapping("/anexo")
-    //@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
-    public String uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
-        OutputStream out = new FileOutputStream(
-                "D:\\Users\\ivanf\\Downloads\\testeupload/anexo--" + anexo.getOriginalFilename());
-        out.write(anexo.getBytes());
-        out.close();
-        return "ok";
+    @PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
+    public Anexo uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
+        String nome = s3.salvarTemporariamente(anexo);
+        return new Anexo(nome, s3.configurarUrl(nome));
     }
+
+// SALVANDO LOCALMENTE
+//    @PostMapping("/anexo")
+//    //@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
+//    public String uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
+//        OutputStream out = new FileOutputStream(
+//                "D:\\Users\\ivanf\\Downloads\\testeupload/anexo--" + anexo.getOriginalFilename());
+//        out.write(anexo.getBytes());
+//        out.close();
+//        return "ok";
+//    }
 
     @GetMapping("/relatorios/por-pessoa")
    // @PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")

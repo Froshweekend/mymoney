@@ -16,6 +16,7 @@ import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.Tag;
 import com.amazonaws.services.s3.model.lifecycle.LifecycleFilter;
 import com.amazonaws.services.s3.model.lifecycle.LifecycleTagPredicate;
+import com.amazonaws.regions.Regions;
 
 @Configuration
 public class S3Config {
@@ -30,6 +31,7 @@ public class S3Config {
 
         AmazonS3 amazonS3 = AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credenciais))
+                .withRegion(Regions.US_EAST_1)
                 .build();
 
         if (!amazonS3.doesBucketExistV2(property.getS3().getBucket())) {
